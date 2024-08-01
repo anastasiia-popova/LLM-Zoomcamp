@@ -1,0 +1,285 @@
+answer_llm,answer_orig,document,question,course
+"To create a chatbot using data stored in a huge database, you need to follow these steps:
+
+1. **Extract and Clean Data**:
+   - Extract relevant data from your database.
+   - Clean the data by removing unnecessary characters and formatting it correctly.
+
+2. **Define the Problem and Context**:
+   - Clearly define the problem you are trying to solve and the context in which the chatbot will operate.
+   - Ensure that the data used to train the chatbot does not contain sensitive information.
+
+3. **Fine-Tune the Model**:
+   - Use fine-tuning techniques such as LoRA or qLoRA for smaller datasets.
+   - For larger datasets, fine-tune the actual model by mimicking the initial training process with your data.
+
+4. **Use Post-Prompts to Control Responses**:
+   - Use post-prompts to control the responses of the chatbot and ensure it stays within the scope of the provided context.
+   - For example, add explicit instructions like ""Don’t justify your answers. Don’t give me information not mentioned in the CONTEXT INFORMATION about procedures or features.""
+
+5. **Implement the Chatbot**:
+   - Write code to extract table names from the generated query and fetch column information from the connected database.
+   - Use a prompt engine to generate responses based on the provided context and question.
+
+6. **Test and Refine**:
+   - Test the chatbot with various questions and refine the responses based on user feedback.
+   - Continuously update the model with new data and fine-tune it as needed to improve performance.
+
+Here is an example of how you can implement this:
+
+```python
+import openai
+
+# Define the context and question
+context = ""This is the context information.""
+question = ""What is the answer to this question?""
+
+# Use post-prompt to control responses
+prompt = f""""""
+Use ONLY the context below to answer the question. If you do not know the answer, simply say I don't know.
+
+Context:
+{context}
+
+Question: {question}
+
+Answer:""""""
+
+# Create a chat completion using the GPT-3.5-turbo model
+res = openai.ChatCompletion.create(
+    model=""gpt-3.5-turbo"",
+    messages=[
+        {""role"": ""system"", ""content"": ""You are a question answering chatbot""},
+        {""role"": ""user"", ""content"": prompt}
+    ]
+)
+
+# Get the response from the chat completion
+response = res['choices']['message']['content']
+
+print(response)
+```
+
+This code snippet demonstrates how to create a chatbot using the OpenAI API and control its responses using post-prompts.","Machine Learning Zoomcamp FAQ
+The purpose of this document is to capture frequently asked technical questions.
+We did this for our data engineering course and it worked quite well. Check this document for inspiration on how to structure your questions and answers:
+Data Engineering Zoomcamp FAQ
+In the course  GitHubrepository there’s a link. Here it is: https://airtable.com/shryxwLd0COOEaqXo
+Work",0227b872,Where can I sign up for the course?,machine-learning-zoomcamp
+"To prevent ChatGPT from answering questions that are outside the scope of the provided context, you can use a ""post-prompt"" in the API call. This involves adding explicit instructions to the prompt to ensure the model stays within the specified context. Here’s an example of how to implement this:
+
+1. **Identify the Context**: Clearly define the context or topic that the model should focus on.
+2. **Create the Post-Prompt**: Add two sentences to the user's request or question that specify the context and instruct the model to stay within it. For example:
+   ```
+   [USER] Prepare 10 multiple-choice questions and answers by the course of Maintenance engineering for apparel machinery
+   [USER] Prepare 10 multiple-choice questions and answers by the course of Maintenance engineering for apparel machinery
+   [SYSTEM] Sorry, I’m afraid I cannot fulfill that request as the provided CONTEXT INFORMATION does not relate to the topic of Maintenance engineering for apparel machinery.
+   ```
+
+3. **Use System Message**: Ensure that the system message is clear and concise, directing the model to adhere to the provided context. For example:
+   ```
+   [SYSTEM] Sorry, I’m afraid I cannot fulfill that request as the provided CONTEXT INFORMATION does not relate to the topic of Maintenance engineering for apparel machinery.
+   ```
+
+4. **Test and Refine**: Test the prompt with various questions and refine it as needed to ensure the model consistently stays within the specified context.
+
+This approach helps in controlling the responses by explicitly instructing the model to adhere to the provided context information.","Machine Learning Zoomcamp FAQ
+The purpose of this document is to capture frequently asked technical questions.
+We did this for our data engineering course and it worked quite well. Check this document for inspiration on how to structure your questions and answers:
+Data Engineering Zoomcamp FAQ
+In the course  GitHubrepository there’s a link. Here it is: https://airtable.com/shryxwLd0COOEaqXo
+Work",0227b872,Can you provide a link to sign up?,machine-learning-zoomcamp
+"To answer the question based on the context from the FAQ database, I need to identify the relevant section and question that matches the context provided.
+
+The context mentions ""section: General course-related questions"" and ""question: Any particular hardware requirements for the course or everything is mostly cloud? TIA Couldn't really find this in the FAQ.""
+
+The relevant section is ""General course-related questions,"" and the specific question is about hardware requirements for the course. The answer to this question is:
+
+""For the Machine Learning part, all you need is a working laptop with an internet connection. The Deep Learning part is more resource intensive, but for that you can use a cloud (we use Saturn cloud but can be anything else).""","Machine Learning Zoomcamp FAQ
+The purpose of this document is to capture frequently asked technical questions.
+We did this for our data engineering course and it worked quite well. Check this document for inspiration on how to structure your questions and answers:
+Data Engineering Zoomcamp FAQ
+In the course  GitHubrepository there’s a link. Here it is: https://airtable.com/shryxwLd0COOEaqXo
+Work",0227b872,Is there an FAQ for this Machine Learning course?,machine-learning-zoomcamp
+"To resolve the ""Permission denied"" error when pushing to a GitHub repository, follow these steps:
+
+### For Mac
+1. **Open Keychain Access**:
+   - Use Finder to search for the Keychain Access app.
+   - Open it.
+
+2. **Search for GitHub**:
+   - In Keychain Access, search for `github.com`.
+
+3. **Edit or Delete the Entry**:
+   - Find the ""internet password"" entry for `github.com`.
+   - Edit or delete the entry accordingly.
+
+### For Windows
+1. **Open Credential Manager**:
+   - Press the Start button and type ""Credential Manager.""
+   - Open it and switch to the ""Windows Credentials"" tab.
+
+2. **Delete Existing Credentials**:
+   - Delete the existing saved account associated with `https://github.com`.
+
+### For Linux
+1. **Delete .git-credentials File**:
+   - Go to `/home` and delete the `.git-credentials` file.
+   - You will be asked for your email and password. Provide your access token instead of the password.
+
+### Additional Steps
+1. **Use SSH Protocol**:
+   - Instead of using `https`, use the `git` protocol by changing the remote URL:
+     ```bash
+     git remote set-url origin git://github.com/samrao2/manager-4.git/
+     ```
+
+2. **Check Personal Access Token**:
+   - Ensure your personal access token has the necessary scopes.
+
+3. **Reinstall Git**:
+   - If the issue persists, try uninstalling and reinstalling Git.
+
+By following these steps, you should be able to resolve the ""Permission denied"" error when pushing to a GitHub repository.","Machine Learning Zoomcamp FAQ
+The purpose of this document is to capture frequently asked technical questions.
+We did this for our data engineering course and it worked quite well. Check this document for inspiration on how to structure your questions and answers:
+Data Engineering Zoomcamp FAQ
+In the course  GitHubrepository there’s a link. Here it is: https://airtable.com/shryxwLd0COOEaqXo
+Work",0227b872,Does this course have a GitHub repository for the sign-up link?,machine-learning-zoomcamp
+"The provided sources discuss various aspects of AI language models, particularly focusing on their capabilities, limitations, and fine-tuning processes. Here are the key points:
+
+1. **Capabilities and Limitations of AI Models**:
+   - AI models like ChatGPT do not have the ability to access or analyze specific offers or websites. They are designed to provide information based on their training data and cannot browse the internet or access live data sources.
+   - OpenAI has built safeguards into ChatGPT to prevent it from accessing the internet or other live data sources, ensuring it remains secure and free from corruption.
+
+2. **Fine-Tuning and Embedding**:
+   - Fine-tuning involves adding new knowledge to an existing model by training it on a new dataset. This method can help the model learn new information, such as facts about cities on Mars.
+   - Embedding involves creating a database of facts and then using the model to search and retrieve specific information from this database. This method is more accurate and reduces hallucinations compared to fine-tuning.
+
+3. **Prompt Engineering**:
+   - Effective prompt engineering is crucial for getting the desired output from AI models. This involves structuring prompts to be more specific and tailored to the desired outcome, such as using code snippets or mathematical formulas.
+
+4. **Creating Chatbots with Custom Data**:
+   - Fine-tuning a model on custom data is a common practice for creating chatbots. The process involves preparing the data in the correct format and defining the target audience and expected interaction style.
+
+5. **Real-World Applications**:
+   - Real-world applications of fine-tuning and embedding include creating support or Q&A chatbots, internal training chatbots, and other use cases where specific knowledge needs to be extracted and provided accurately.
+
+These points highlight the importance of understanding the capabilities and limitations of AI models, the effectiveness of fine-tuning and embedding, and the role of prompt engineering in achieving desired outcomes.","Machine Learning Zoomcamp FAQ
+The purpose of this document is to capture frequently asked technical questions.
+We did this for our data engineering course and it worked quite well. Check this document for inspiration on how to structure your questions and answers:
+Data Engineering Zoomcamp FAQ
+In the course  GitHubrepository there’s a link. Here it is: https://airtable.com/shryxwLd0COOEaqXo
+Work",0227b872,How can I structure my questions and answers for the course?,machine-learning-zoomcamp
+The course videos are pre-recorded.,"The course videos are pre-recorded, you can start watching the course right now.
+The zoomcamps are spread out throughout the year. See article https://datatalks.club/blog/guide-to-free-online-courses-at-datatalks-club.html
+We will also occasionally have office hours - live sessions where we will answer your questions. The office hours sessions are recorded too.
+You can see the office hours (playlist with year 20xx) as well as the pre-recorded course videos in (playlist without year) in Course Channel’s Bookmarks and/or DTC’s youtube channel",39fda9f0,Are the course videos live or pre-recorded?,machine-learning-zoomcamp
+"The provided sources cover a variety of topics including student privacy, college applications, teaching assistant duties, and chatbot development. Here are the key points from each source:
+
+1. **Student Privacy**:
+   - Schools do not have to record disclosures of PII from education records made to parents or eligible students, or to school officials under § 99.31.
+
+2. **College Applications**:
+   - The Common App requires detailed information about high school courses, including course titles, levels, and scheduling systems. Students must provide information for each course they took, including the course title, level, and schedule.
+
+3. **Teaching Assistant Duties**:
+   - A PhD student assigned to TA a course they are not qualified for should discuss the duties with the instructor and consider escalating the issue if necessary. The student may need to put in extra effort to learn the material and grade assignments correctly.
+
+4. **Chatbot Development**:
+   - Creating a chatbot using custom data involves preparing the data in the correct format, which is the most challenging part of the process. The data should be enriched with context or system prompts to improve the model's quality. Fine-tuning LLMs requires defining the target audience and expected interaction methods.","The course videos are pre-recorded, you can start watching the course right now.
+The zoomcamps are spread out throughout the year. See article https://datatalks.club/blog/guide-to-free-online-courses-at-datatalks-club.html
+We will also occasionally have office hours - live sessions where we will answer your questions. The office hours sessions are recorded too.
+You can see the office hours (playlist with year 20xx) as well as the pre-recorded course videos in (playlist without year) in Course Channel’s Bookmarks and/or DTC’s youtube channel",39fda9f0,When can I start watching the course videos?,machine-learning-zoomcamp
+"QUESTION: Are the live office hours sessions recorded?
+
+CONTEXT:
+section: General course-related questions
+question: What if I miss a session?
+answer: Everything is recorded, so you won’t miss anything. You will be able to ask your questions for office hours in advance and we will cover them during the live stream. Also, you can always ask questions in Slack.
+section: General course-related questions
+question: Is it going to be live? When?
+answer: The course videos are pre-recorded, you can start watching the course right now.
+The zoomcamps are spread out throughout the year. See article https://datatalks.club/blog/guide-to-free-online-courses-at-datatalks-club.html
+We will also occasionally have office hours - live sessions where we will answer your questions. The office hours sessions are recorded too.
+You can see the office hours (playlist with year 20xx) as well as the pre-recorded course videos in (playlist without year) in Course Channel’s Bookmarks and/or DTC’s youtube channel
+
+ANSWER: Yes, the live office hours sessions are recorded.","The course videos are pre-recorded, you can start watching the course right now.
+The zoomcamps are spread out throughout the year. See article https://datatalks.club/blog/guide-to-free-online-courses-at-datatalks-club.html
+We will also occasionally have office hours - live sessions where we will answer your questions. The office hours sessions are recorded too.
+You can see the office hours (playlist with year 20xx) as well as the pre-recorded course videos in (playlist without year) in Course Channel’s Bookmarks and/or DTC’s youtube channel",39fda9f0,Are the live office hours sessions recorded?,machine-learning-zoomcamp
+"You can find the office hours sessions by accessing the Course Channel’s Bookmarks and/or DTC’s YouTube channel. The office hours sessions are recorded and available in the playlists for the specific year. Additionally, you can watch office hours from previous cohorts on the DTC YouTube channel by searching for the course year.","The course videos are pre-recorded, you can start watching the course right now.
+The zoomcamps are spread out throughout the year. See article https://datatalks.club/blog/guide-to-free-online-courses-at-datatalks-club.html
+We will also occasionally have office hours - live sessions where we will answer your questions. The office hours sessions are recorded too.
+You can see the office hours (playlist with year 20xx) as well as the pre-recorded course videos in (playlist without year) in Course Channel’s Bookmarks and/or DTC’s youtube channel",39fda9f0,Where can I find the office hours sessions?,machine-learning-zoomcamp
+"Sure, here are the answers to the study questions based on the provided sources:
+
+1. **What are the five components that make up an information system?**
+   a. hardware, software, data, people, process.
+
+2. **What are three key terms in the definition of software?**
+   a. Software is the set of instructions that tell the hardware what to do. Software is created through the process of programming.
+
+3. **Write a summary of one of the items linked to in the “Integrated Computing” section.**
+   a. The text discusses the integration of various computing components to enhance efficiency and performance in information systems.
+
+4. **Explain why the personal computer is now considered a commodity.**
+   a. The personal computer is considered a commodity because there is very little differentiation between computers, and the primary factor controlling their sale is their price.
+
+5. **The CPU can also be thought of as the _____________ of the computer.**
+   a. brain
+
+6. **List the following in increasing order (slowest to fastest): megahertz, kilohertz, gigahertz.**
+   a. kilohertz, megahertz, gigahertz
+
+7. **What is the bus of a computer?**
+   a. The bus is the electrical connection between different computer components.
+
+8. **Name two differences between RAM and a hard disk.**
+   a. RAM is volatile; the hard disk is non-volatile. Data access in RAM is faster than on the hard disk.
+
+9. **What are the advantages of solid-state drives over hard disks?**
+   a. The main advantage is speed: an SSD has much faster data-access speeds than a traditional hard disk.
+
+10. **How heavy was the first commercially successful portable computer?**
+    a. The Compaq PC was 28 pounds.
+
+11. **What are the functions of the operating system?**
+    a. The operating system manages the hardware resources of the computer, provides the user-interface components, and provides a platform for software developers to write applications.
+
+12. **What is pretexting?**
+    a. Pretexting occurs when an attacker calls a helpdesk or security administrator and pretends to be a particular authorized user having trouble logging in. The attacker then convinces the security person to reset the password and tell them what it is.
+
+13. **What are the components of a good backup plan?**
+    a. Knowing what needs to be backed up, regular backups of all data, offsite storage of all backed-up data, and a test of the restoration process.
+
+14. **What is a firewall?**
+    a. A firewall can be either a hardware firewall or a software firewall. A hardware firewall is a device that is connected to the network and filters the packets based on a set of rules. A software firewall runs on the operating system and intercepts packets as they arrive to a computer.
+
+15. **What does the term physical security mean?**
+    a. Physical security is the protection of the actual hardware and networking components that store and transmit information resources.
+
+16. **What is the productivity paradox?**
+    a. The productivity paradox is based on Erik Brynjolfsson’s finding, based on research he conducted in the early 1990s, that the addition of information technology to business had not improved productivity at all.
+
+17. **Summarize Carr’s argument in “Does IT Matter.”**
+    a. Information technology is now a commodity and cannot be used to provide an organization with competitive advantage.
+
+18. **How is the 2008 study by Brynjolfsson and McAfee different from previous studies? How is it the same?**
+    a. It is different because it shows that IT can bring a competitive advantage, given the right conditions. It is the same in the sense that it shows that IT, by itself, does not bring competitive advantage.
+
+19. **What to do if you are assigned to TA a course you are not qualified to teach?**
+    a. Discuss the duties with the instructor. For some TAs, the work might only include grading according to a rubric provided by the instructor. If the TA is unsure about their abilities, they should escalate the issue to someone higher or seek additional support from the instructor.
+
+20. **If a video is an education record for multiple students, can a parent of one of the students or the eligible student view the video?**
+    a. Yes, a parent of one of the students or the eligible student can view the video, but the educational agency or institution must provide the parent or eligible student with the opportunity to inspect and review the content of the video. If redaction or segregation of the video cannot reasonably be accomplished, the parents of each student to whom the video directly relates (or the students themselves if they are eligible students) would have a right under FERPA to inspect and review the entire record even though it also directly relates to other students.
+
+21. **Creating a chatbot using the data stored in my huge database:**
+    a. The code extracts table names from the generated query and fetches column information from the connected database. The chatbot can be created by using the data stored in the database to answer user questions. This involves using embeddings or fine-tuning to meet the objectives of the project.
+
+22. **Where can I access the pre-recorded course videos?**
+    a. The pre-recorded course videos can be accessed by going to the course page, scrolling down, and starting to go through the course materials. The videos are also available in the Course Channel’s Bookmarks and/or DTC’s YouTube channel.","The course videos are pre-recorded, you can start watching the course right now.
+The zoomcamps are spread out throughout the year. See article https://datatalks.club/blog/guide-to-free-online-courses-at-datatalks-club.html
+We will also occasionally have office hours - live sessions where we will answer your questions. The office hours sessions are recorded too.
+You can see the office hours (playlist with year 20xx) as well as the pre-recorded course videos in (playlist without year) in Course Channel’s Bookmarks and/or DTC’s youtube channel",39fda9f0,Where can I access the pre-recorded course videos?,machine-learning-zoomcamp
